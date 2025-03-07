@@ -3,15 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Stock Market Dashboard</title>
+    <title>Stock Watchlist</title>
     <style>
         body {
             background-color: #f4f4f4;
             text-align: center;
             font-family: Arial, sans-serif;
         }
-        h2 {
+        h1 {
             color: #333;
+        }
+        .watchlist {
+            margin: 20px auto;
+            padding: 10px;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+        .watchlist button {
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        .watchlist button:hover {
+            background-color: #0056b3;
         }
         .tradingview-widget-container {
             margin: 20px auto;
@@ -22,86 +41,38 @@
 </head>
 <body>
 
-    <h1>📊 My Live Stock Dashboard</h1>
-    <p>Tracking real-time stock prices for selected companies.</p>
+    <h1>📊 My Stock Watchlist</h1>
+    <p>Click a stock symbol to view its chart.</p>
 
-    <!-- AES Chart -->
-    <h2>AES Corporation (AES)</h2>
+    <!-- Watchlist Buttons -->
+    <div class="watchlist">
+        <button onclick="changeStock('NYSE:AES')">AES</button>
+        <button onclick="changeStock('NYSE:KNSL')">KNSL</button>
+        <button onclick="changeStock('NYSE:NVO')">NVO</button>
+        <button onclick="changeStock('NASDAQ:HOOD')">HOOD</button>
+        <button onclick="changeStock('NASDAQ:AMZN')">AMZN</button>
+    </div>
+
+    <!-- TradingView Chart (Dynamic) -->
     <div class="tradingview-widget-container">
-        <div id="tradingview_aes"></div>
+        <div id="tradingview_chart"></div>
         <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
         <script type="text/javascript">
-            new TradingView.widget({
-                "container_id": "tradingview_aes",
-                "symbol": "NYSE:AES",
-                "interval": "D",
-                "theme": "light",
-                "autosize": true
-            });
-        </script>
-    </div>
+            function changeStock(symbol) {
+                document.getElementById("tradingview_chart").innerHTML = "";
+                new TradingView.widget({
+                    "container_id": "tradingview_chart",
+                    "symbol": symbol,
+                    "interval": "D",
+                    "theme": "light",
+                    "autosize": true
+                });
+            }
 
-    <!-- KNSL Chart -->
-    <h2>Kinsale Capital (KNSL)</h2>
-    <div class="tradingview-widget-container">
-        <div id="tradingview_knsl"></div>
-        <script type="text/javascript">
-            new TradingView.widget({
-                "container_id": "tradingview_knsl",
-                "symbol": "NYSE:KNSL",
-                "interval": "D",
-                "theme": "dark",
-                "autosize": true
-            });
-        </script>
-    </div>
-
-    <!-- NVO Chart -->
-    <h2>Novo Nordisk (NVO)</h2>
-    <div class="tradingview-widget-container">
-        <div id="tradingview_nvo"></div>
-        <script type="text/javascript">
-            new TradingView.widget({
-                "container_id": "tradingview_nvo",
-                "symbol": "NYSE:NVO",
-                "interval": "D",
-                "theme": "light",
-                "autosize": true
-            });
-        </script>
-    </div>
-
-    <!-- HOOD Chart -->
-    <h2>Robinhood Markets (HOOD)</h2>
-    <div class="tradingview-widget-container">
-        <div id="tradingview_hood"></div>
-        <script type="text/javascript">
-            new TradingView.widget({
-                "container_id": "tradingview_hood",
-                "symbol": "NASDAQ:HOOD",
-                "interval": "D",
-                "theme": "dark",
-                "autosize": true
-            });
-        </script>
-    </div>
-
-    <!-- AMZN Chart -->
-    <h2>Amazon (AMZN)</h2>
-    <div class="tradingview-widget-container">
-        <div id="tradingview_amzn"></div>
-        <script type="text/javascript">
-            new TradingView.widget({
-                "container_id": "tradingview_amzn",
-                "symbol": "NASDAQ:AMZN",
-                "interval": "D",
-                "theme": "light",
-                "autosize": true
-            });
+            // Load default stock on page load
+            changeStock("NYSE:AES");
         </script>
     </div>
 
 </body>
 </html>
-
-
